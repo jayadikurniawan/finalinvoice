@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test PDFMake</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.9/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.9/vfs_fonts.js"></script>
+  </head>
+  <body>
+    <button onclick="generate()">Generate PDF</button>
+
+    <script>
+      var dd = {
+        pageSize: 'A4',
+        pageMargins: [40, 40, 40, 40],
+
+        content: [
+          { text: 'INVOICE', style: 'title', alignment: 'center', margin: [0, 0, 0, 2] },
+          { text: '046/TEI/INV/V/2025', alignment: 'center', margin: [0, 0, 0, 14] },
+
+          // INFO BLOCK
+          {
+            table: {
+              widths: [120, 10, '*'],
+              body: [
+                [{ text: 'Date', style: 'label' }, { text: ':', style: 'label' }, { text: '22 May 2025', style: 'value' }],
+                [{ text: 'To', style: 'label' }, { text: ':', style: 'label' }, { text: 'PT TUNAS BINATAMA LESTARI', style: 'valueBold' }],
+                [{ text: 'Tugboat / Barge', style: 'label' }, { text: ':', style: 'label' }, { text: 'TB RIMAU 1623 / BG TBS 3001', style: 'value' }],
+                [{ text: 'Port of Loading', style: 'label' }, { text: ':', style: 'label' }, { text: 'Jetty PT. SEM Telang Baru Barito Timur', style: 'value' }],
+                [{ text: 'Port of Discharge', style: 'label' }, { text: ':', style: 'label' }, { text: 'TRANSHIPMENT TABONEO TO MV AMANAH HALMAHERA 2', style: 'value' }],
+              ]
+            },
+            layout: 'noBorders',
+            margin: [0, 0, 0, 6]
+          },
+
+          // TABLE SECTION
+          {
+            table: {
+              widths: [140, 10, 90, 90, 120], // <-- ubah kolom pertama dari '*' jadi fixed 140
+              headerRows: 1,
+              body: [
+                [
+                  { text: 'DESCRIPTION OF GOODS', style: 'th', colSpan: 2 }, {},
+                  { text: 'QUANTITY\nMT', style: 'thCompact', alignment: 'center' },
+                  { text: 'PRICE\nIDR', style: 'thCompact', alignment: 'center' },
+                  { text: 'TOTAL AMOUNT\nIDR', style: 'thCompact', alignment: 'center' },
+                ],
+                [
+                  { text: 'COAL IN BULK', style: 'rowText', alignment: 'left', margin: [0, 8, 0, 8] },
+                  { text: ':', style: 'rowText', alignment: 'center', margin: [0, 8, 0, 8] },
+                  { text: '7.759,543', style: 'rowNum', alignment: 'right', margin: [0, 8, 0, 8] },
+                  { text: '494.111', style: 'rowNum', alignment: 'right', margin: [0, 8, 0, 8] },
+                  { text: '3.834.075.551', style: 'rowNum', alignment: 'right', margin: [0, 8, 0, 8] },
+                ],
+              ]
+            },
+            layout: {
+              // Garis atas, tengah (setelah header), dan bawah
+              hLineWidth: function (i, node) {
+                if (i === 0 || i === 1) return 1;
+                return 0;
+              },
+              vLineWidth: function () { return 0; },
+              hLineColor: function () { return 'black'; },
+              paddingLeft: function (i) { return i === 0 ? 0 : 6; },
+              paddingRight: function () { return 6; },
+              paddingTop: function () { return 5; },
+              paddingBottom: function () { return 5; }
+            },
+            margin: [0, 0, 0, 90]
+          },
+
+          // TOTAL SECTION
+          {
+            table: {
+              // 330 = 140 + 10 + 90 + 90 (empat kolom kiri tabel item)
+              widths: [330, 120],
+              body: [
+                [
+                  { text: 'TOTAL AMOUNT', style: 'thRight' },
+                  { text: '3.834.075.551', style: 'thRightBold', alignment: 'right' }
+                ]
+              ]
+            },
+            layout: {
+              hLineWidth: function () { return 1; },
+              vLineWidth: function () { return 0; },
+              hLineColor: function () { return 'black'; },
+              paddingLeft: function () { return 0; }, // samakan dengan tabel atas
+              paddingRight: function () { return 6; }, // samakan dengan tabel atas
+              paddingTop: function(){ return 4; },
+              paddingBottom: function(){ return 4; }
+            },
+            margin: [0, 6, 0, 10]
+          },
+
+          { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }], margin: [0, 2, 0, 10] },
+
+          // SIGNATURE SECTION
+          { text: 'Regards,', style: 'small', margin: [0, 2, 0, 2] },
+          { text: 'PT TIBAWAN ENERGI INDONESIA', bold: true, margin: [0, 0, 0, 10] },
+          // { image: 'SIGN', width: 160, margin: [0, 0, 0, 4] }, // aktifkan jika sudah ada base64
+          { text: 'Finance Department', bold: true, decoration: 'underline', fontSize: 10 }
+        ],
+
+        styles: {
+          title: { fontSize: 14, bold: true },
+          label: { fontSize: 10 },
+          value: { fontSize: 10 },
+          valueBold: { fontSize: 10, bold: true },
+          th: { bold: true, fontSize: 10, alignment: 'left' },
+          thCompact: { bold: true, fontSize: 10, lineHeight: 1.0 },
+          thRight: { bold: true, fontSize: 10, alignment: 'left' },
+          thRightBold: { bold: true, fontSize: 10 },
+          unit: { fontSize: 9 },
+          rowText: { fontSize: 10, bold: true },
+          rowNum: { fontSize: 10 },
+          small: { fontSize: 9 }
+        }
+      };
+
+      function generate() {
+        pdfMake.createPdf(dd).open();
+      }
+    </script>
+  </body>
+</html>

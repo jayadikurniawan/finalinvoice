@@ -27,7 +27,7 @@
                 [{ text: 'To', style: 'label' }, { text: ':', style: 'label' }, { text: 'PT TUNAS BINATAMA LESTARI', style: 'valueBold' }],
                 [{ text: 'Tugboat / Barge', style: 'label' }, { text: ':', style: 'label' }, { text: 'TB RIMAU 1623 / BG TBS 3001', style: 'value' }],
                 [{ text: 'Port of Loading', style: 'label' }, { text: ':', style: 'label' }, { text: 'Jetty PT. SEM Telang Baru Barito Timur', style: 'value' }],
-                [{ text: 'Port of Discharge', style: 'label' }, { text: ':', style: 'label' }, { text: 'TRANSHIPMENT TABONEO TO MV AMANAH HALMAHERA 2', style: 'value' }],
+                [{ text: 'Port of Discharge', style: 'label' }, { text: ':', style: 'label' }, { text: 'TRANSHIPMENT TO MV AMANAH HALMAHERA OR SUBS TABONEO', style: 'value' }],
               ]
             },
             layout: 'noBorders',
@@ -37,7 +37,7 @@
           // TABLE SECTION
           {
             table: {
-              widths: [140, 10, 90, 90, 120],
+              widths: ['*', 10, 90, 90, 120],
               headerRows: 1,
               body: [
                 [
@@ -71,7 +71,7 @@
               paddingTop: function () { return 5; },
               paddingBottom: function () { return 5; }
             },
-            margin: [0, 0, 0, 90]
+            margin: [0, 0, 0, 30]
           },
 
           { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }], margin: [0, 2, 0, 10] },

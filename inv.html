@@ -37,14 +37,14 @@
           // TABLE SECTION
           {
             table: {
-              widths: [140, 10, 90, 90, 120], // <-- ubah kolom pertama dari '*' jadi fixed 140
+              widths: [140, 10, 90, 90, 120],
               headerRows: 1,
               body: [
                 [
                   { text: 'DESCRIPTION OF GOODS', style: 'th', colSpan: 2 }, {},
-                  { text: 'QUANTITY\nMT', style: 'thCompact', alignment: 'center' },
-                  { text: 'PRICE\nIDR', style: 'thCompact', alignment: 'center' },
-                  { text: 'TOTAL AMOUNT\nIDR', style: 'thCompact', alignment: 'center' },
+                  { text: 'QUANTITY\nMT', style: 'thCompact', alignment: 'right' },
+                  { text: 'PRICE\nIDR', style: 'thCompact', alignment: 'right' },
+                  { text: 'TOTAL AMOUNT\nIDR', style: 'thCompact', alignment: 'right' },
                 ],
                 [
                   { text: 'COAL IN BULK', style: 'rowText', alignment: 'left', margin: [0, 8, 0, 8] },
@@ -53,14 +53,17 @@
                   { text: '494.111', style: 'rowNum', alignment: 'right', margin: [0, 8, 0, 8] },
                   { text: '3.834.075.551', style: 'rowNum', alignment: 'right', margin: [0, 8, 0, 8] },
                 ],
+                [
+                  { text: '', border: [false, true, false, true], colSpan: 3 },
+                  { text: '', border: [false, true, false, true] },
+                  { text: '', border: [false, true, false, true] },
+                  { text: 'TOTAL AMOUNT', style: 'thRight', alignment: 'right', border: [false, true, false, true], margin: [0, 6, 4, 6] },
+                  { text: '3.834.075.551', style: 'thRightBold', alignment: 'right', border: [false, true, false, true], margin: [0, 6, 0, 6] },
+                ],
               ]
             },
             layout: {
-              // Garis atas, tengah (setelah header), dan bawah
-              hLineWidth: function (i, node) {
-                if (i === 0 || i === 1) return 1;
-                return 0;
-              },
+              hLineWidth: function () { return 1; },
               vLineWidth: function () { return 0; },
               hLineColor: function () { return 'black'; },
               paddingLeft: function (i) { return i === 0 ? 0 : 6; },
@@ -69,30 +72,6 @@
               paddingBottom: function () { return 5; }
             },
             margin: [0, 0, 0, 90]
-          },
-
-          // TOTAL SECTION
-          {
-            table: {
-              // 330 = 140 + 10 + 90 + 90 (empat kolom kiri tabel item)
-              widths: [330, 120],
-              body: [
-                [
-                  { text: 'TOTAL AMOUNT', style: 'thRight' },
-                  { text: '3.834.075.551', style: 'thRightBold', alignment: 'right' }
-                ]
-              ]
-            },
-            layout: {
-              hLineWidth: function () { return 1; },
-              vLineWidth: function () { return 0; },
-              hLineColor: function () { return 'black'; },
-              paddingLeft: function () { return 0; }, // samakan dengan tabel atas
-              paddingRight: function () { return 6; }, // samakan dengan tabel atas
-              paddingTop: function(){ return 4; },
-              paddingBottom: function(){ return 4; }
-            },
-            margin: [0, 6, 0, 10]
           },
 
           { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }], margin: [0, 2, 0, 10] },
@@ -111,11 +90,11 @@
           valueBold: { fontSize: 10, bold: true },
           th: { bold: true, fontSize: 10, alignment: 'left' },
           thCompact: { bold: true, fontSize: 10, lineHeight: 1.0 },
-          thRight: { bold: true, fontSize: 10, alignment: 'left' },
-          thRightBold: { bold: true, fontSize: 10 },
+          thRight: { bold: true, fontSize: 10, alignment: 'right' },
+          thRightBold: { bold: true, fontSize: 10, alignment: 'right' },
           unit: { fontSize: 9 },
           rowText: { fontSize: 10, bold: true },
-          rowNum: { fontSize: 10 },
+          rowNum: { fontSize: 10, alignment: 'right' },
           small: { fontSize: 9 }
         }
       };
